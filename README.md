@@ -77,8 +77,9 @@ is handy for testing the UI. Without Supabase settings it stores scans in `insta
 ### 2. Supabase (database)
 1. Create a project at <https://supabase.com>.
 2. Open **SQL Editor**, paste [`supabase/schema.sql`](supabase/schema.sql), and click **Run**.
-3. In **Project Settings → API**, copy the **Project URL** and the **service_role** key.
-   The service_role key is secret: put it only in Render's environment variables, never in frontend code.
+3. In **Project Settings → API Keys**, copy the **Project URL** (`https://<project-id>.supabase.co`) and the
+   **secret** key (`sb_secret_…`, or the legacy **service_role** key: both work).
+   This key is secret: put it only in Render's environment variables, never in frontend code.
 
 ### 3. Render (hosting)
 1. Push this repo to GitHub.

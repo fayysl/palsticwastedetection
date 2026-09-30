@@ -6,6 +6,7 @@ REST API (PostgREST) directly, so no extra SDK is needed.
 
 import json
 import os
+import re
 import sqlite3
 import threading
 import uuid
@@ -118,13 +119,26 @@ class SQLiteStore:
         return self._decode(r) if r else None
 
 
+def normalize_supabase_url(url):
+    """Accept the project URL, a dashboard link, or a URL ending in /rest/v1."""
+    url = url.strip().rstrip("/")
+    m = re.match(r"^https?://(?:app\.)?supabase\.com/dashboard/project/([a-z0-9]+)", url)
+    if m:
+        return f"https://{m.group(1)}.supabase.co"
+    return re.sub(r"/rest/v1$", "", url)
+
+
 class SupabaseStore:
     kind = "supabase"
 
     def __init__(self, url, key, table="scans"):
-        self.base = f"{url.rstrip('/')}/rest/v1/{table}"
-        self.headers = {"apikey": key, "Authorization": f"Bearer {key}",
-                        "Content-Type": "application/json"}
+        self.base = f"{normalize_supabase_url(url)}/rest/v1/{table}"
+        key = key.strip()
+        self.headers = {"apikey": key, "Content-Type": "application/json"}
+        # Legacy keys (anon/service_role) are JWTs and also go in Authorization.
+        # New sb_secret_/sb_publishable_ keys are not JWTs: the gateway rejects them there.
+        if key.startswith("eyJ"):
+            self.headers["Authorization"] = f"Bearer {key}"
 
     def _req(self, method, params=None, body=None, prefer=None):
         headers = dict(self.headers)

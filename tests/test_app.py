@@ -151,3 +151,13 @@ def test_supabase_store_requests(monkeypatch):
     assert method == "POST" and url == "https://abc.supabase.co/rest/v1/scans"
     assert headers["apikey"] == "service-key" and body["id"] == row["id"]
     assert sent[1][3]["client_id"] == "eq.client-123456"
+
+
+def test_supabase_key_headers_and_url_normalization():
+    from services.store import SupabaseStore, normalize_supabase_url
+    new = SupabaseStore("https://abc.supabase.co", "sb_secret_xyz ")
+    assert new.headers["apikey"] == "sb_secret_xyz" and "Authorization" not in new.headers
+    legacy = SupabaseStore("https://abc.supabase.co", "eyJhbGciOi.payload.sig")
+    assert legacy.headers["Authorization"] == "Bearer eyJhbGciOi.payload.sig"
+    assert normalize_supabase_url("https://supabase.com/dashboard/project/ljywbv") == "https://ljywbv.supabase.co"
+    assert normalize_supabase_url(" https://abc.supabase.co/rest/v1/ ") == "https://abc.supabase.co"
