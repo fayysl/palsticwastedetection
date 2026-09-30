@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Plastic Guide{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">📘 Plastic Recycling Guide</h1>
+  <p class="muted">The number inside the recycling triangle tells you what the plastic is made of.</p>
+
+  <div class="resin-grid">
+    {% for num, r in resins.items() %}
+    <div class="card resin">
+      <div class="resin-badge">{{ num }}</div>
+      <div>
+        <h3>{{ r.code }} <small class="muted">{{ r.name }}</small></h3>
+        <p>{{ r.examples }}</p>
+        <span class="tag tag-{{ r.recyclable }}">Recyclable: {{ r.recyclable }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <h2 class="section-title">What to do with each item</h2>
+  <div class="guide-grid">
+    {% for key, c in categories.items() %}
+    <div class="card">
+      <h3>{{ c.icon }} {{ c.label }}</h3>
+      <span class="bin-tag" style="background: {{ bins[c.bin].color }}">{{ bins[c.bin].label }}</span>
+      <ul>{% for a in c.actions %}<li>{{ a }}</li>{% endfor %}</ul>
+      <p class="muted">♻ {{ c.reuse }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

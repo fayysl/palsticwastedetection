@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Scan Waste{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">📸 AI Plastic Scanner</h1>
+  <p class="muted">Upload or take a photo of plastic waste. Good light and one pile per photo work best.</p>
+
+  <div class="scan-layout">
+    <div class="card upload-card">
+      <label class="dropzone" id="dropzone">
+        <input type="file" id="file" accept="image/*" capture="environment" hidden>
+        <div class="dz-empty" id="dz-empty">
+          <div class="dz-icon">📷</div>
+          <strong>Tap to take a photo or choose one</strong>
+          <span class="muted">or drag &amp; drop · JPG, PNG, WEBP · max 10 MB</span>
+        </div>
+        <img id="preview" alt="Selected photo" hidden>
+      </label>
+      <div class="upload-actions">
+        <button class="btn btn-ghost" id="change" type="button" hidden>Choose another</button>
+        <button class="btn btn-primary btn-lg" id="analyze" type="button" disabled>🔍 Analyse waste</button>
+      </div>
+      <p class="error" id="error" role="alert" hidden></p>
+    </div>
+
+    <div id="result" class="result" aria-live="polite">
+      <div class="card placeholder">
+        <p class="muted">Results appear here: detected items, plastic type, waste level and what to do next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scan.js') }}"></script>
+{% endblock %}

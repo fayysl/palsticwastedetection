@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Track{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">📊 Your Environmental Impact</h1>
+  <p class="muted">Scans from this browser. Keep scanning to level up!</p>
+
+  <div class="kpis">
+    <div class="card kpi"><span>Eco level</span><strong id="k-level">–</strong><small id="k-next"></small></div>
+    <div class="card kpi"><span>Eco points</span><strong id="k-points">–</strong></div>
+    <div class="card kpi"><span>Items detected</span><strong id="k-items">–</strong><small id="k-recyclable"></small></div>
+    <div class="card kpi"><span>CO₂ saved</span><strong id="k-co2">–</strong><small>kg (estimate)</small></div>
+  </div>
+
+  <div class="charts">
+    <div class="card"><h3>Items by type</h3><div class="chart-box"><canvas id="c-category"></canvas></div></div>
+    <div class="card"><h3>Where it goes</h3><div class="chart-box"><canvas id="c-bin"></canvas></div></div>
+    <div class="card wide"><h3>Items scanned per day</h3><div class="chart-box"><canvas id="c-daily"></canvas></div></div>
+  </div>
+
+  <h2 class="section-title">Scan history</h2>
+  <div id="history" class="history"><p class="muted">Loading…</p></div>
+
+  <div class="card community">
+    <h3>🌍 Community impact</h3>
+    <p><strong id="cm-scans">–</strong> scans · <strong id="cm-items">–</strong> items ·
+      <strong id="cm-co2">–</strong> kg CO₂ saved by everyone using EcoScan</p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

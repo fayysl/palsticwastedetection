@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Scan result{% endblock %}
+{% block content %}
+<section class="container section">
+  <a href="/dashboard" class="back">← Back to dashboard</a>
+  <h1 class="page-title">Scan result</h1>
+  <div class="scan-layout">
+    <div class="card"><img class="detail-img" src="{{ scan.thumbnail }}" alt="Scanned photo"></div>
+    <div id="result" class="result"></div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scan.js') }}"></script>
+<script>renderResult({{ scan | tojson }});</script>
+{% endblock %}
