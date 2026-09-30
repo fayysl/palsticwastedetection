@@ -12,6 +12,15 @@ and provides **environmental actions** such as segregation, recycling or disposa
 | ♻️ **Act** | Step-by-step segregation, recycling, reuse and disposal guidance per item, AI tips for that photo, and a "find recycling centres near me" link. |
 | 📊 **Track** | A dashboard with scan history, eco points and levels, estimated CO₂ saved, charts by plastic type/bin/day, and community totals. |
 
+## Documentation
+
+| Doc | What it covers |
+|-----|----------------|
+| [Product Requirements (PRD)](docs/PRD.md) | Problem, users, features, acceptance criteria, success metrics |
+| [AGENTS.md](AGENTS.md) | Rules and structure for AI coding assistants (`CLAUDE.md` imports it) |
+| [Technical Design](docs/TECHNICAL_DESIGN.md) | Architecture, data flow, AI fallback, schema, API, deployment, ADRs |
+| [Data Governance & Compliance](docs/DATA_GOVERNANCE.md) | Data inventory, lineage, privacy guardrails, GDPR / DPDP / EU AI Act mapping |
+
 ## Tech stack
 
 | Layer | Choice |
